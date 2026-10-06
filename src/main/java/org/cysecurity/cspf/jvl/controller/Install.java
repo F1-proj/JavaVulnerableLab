@@ -49,7 +49,21 @@ public class Install extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String configPath=getServletContext().getRealPath("/WEB-INF/config.properties");
-        
+
+        // Authentication guard: deny access if application is already installed.
+        // CWE-306 fix: the Install endpoint performs critical operations (database
+        // creation, admin account provisioning) and must not be accessible once the
+        // application has been set up.  Reading the "installed" flag from the
+        // server-side config file (not from any user-supplied parameter) provides a
+        // reliable, unauthenticated-request-proof gate.
+        Properties installCheck = new Properties();
+        installCheck.load(new FileInputStream(configPath));
+        if ("true".equals(installCheck.getProperty("installed"))) {
+            response.sendError(HttpServletResponse.SC_FORBIDDEN,
+                    "Application is already installed. Re-installation is not permitted.");
+            return;
+        }
+
         //Getting Database Configuration from User Input
         dburl = request.getParameter("dburl");
         jdbcdriver = request.getParameter("jdbcdriver");
@@ -69,8 +83,11 @@ public class Install extends HttpServlet {
          config.setProperty("dbpass",dbpass);
          config.setProperty("dbname",dbname);
          config.setProperty("siteTitle",siteTitle);
+         // Mark the application as installed so the Install endpoint is blocked
+         // on all subsequent requests (CWE-306 fix).
+         config.setProperty("installed","true");
          FileOutputStream fileout = new FileOutputStream(configPath);
-         config.store(fileout, null); 
+         config.store(fileout, null);
          fileout.close();
          
         String i=request.getParameter("setup");
