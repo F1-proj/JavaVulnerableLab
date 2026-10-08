@@ -32,7 +32,10 @@
 	<dependency>
 		<groupId>org.hibernate</groupId>
 		<artifactId>hibernate-core</artifactId>
-		<version>4.0.1.Final</version>
+		<!-- Upgraded from 4.0.1.Final to 5.4.24.Final to remediate CVE-2020-10683.
+		     Hibernate 5.4.x uses org.dom4j:dom4j:2.1.3+ (safe) instead of
+		     the vulnerable dom4j:dom4j:1.6.1 transitive dependency. -->
+		<version>5.4.24.Final</version>
 		<scope>test</scope>
 	</dependency>
 	<dependency>
@@ -50,7 +53,7 @@
     <artifactId>servlet-api</artifactId>
     <version>2.3</version>
     <scope>provided</scope>
-</dependency>	 	
+</dependency>
   </dependencies>
   <build>
     <finalName>JavaVulnerableLab</finalName>
