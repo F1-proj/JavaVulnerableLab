@@ -9,7 +9,7 @@
     <tr><td>Database Name:</td> <td><input type="text" name="dbname" value="abc"/></td></tr>
     <tr><td>Database User:</td> <td><input type="text" name="dbuser" value="root"/></td></tr>
      <tr><td>Database Password:</td> <td><input type="text" name="dbpass" value="root"/></td></tr>
-       <tr><td>JDBC Driver:</td> <td><input type="text" name="jdbcdriver" value="com.mysql.jdbc.Driver"/></td></tr>
+       <tr><td>JDBC Driver:</td> <td><input type="text" name="jdbcdriver" value="com.mysql.cj.jdbc.Driver"/></td></tr>
        <tr><td>JDBC URL:</td> <td><input type="text" name="dburl" value="jdbc:mysql://mysql:3306/"/></td></tr>
        <tr><td>Admin Login Credential:</td></tr>
        <tr><td>Username(Default):</td> <td><input type="text" name="adminuser" value="admin"/></td></tr>
