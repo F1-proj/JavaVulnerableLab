@@ -7,6 +7,16 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>JavaVulnerableLab Maven Webapp</name>
   <url>http://maven.apache.org</url>
+  <dependencyManagement>
+    <dependencies>
+      <!-- Override transitive commons-collections (via hibernate-core, 3.2.1) to fix CVE-2015-6420 -->
+      <dependency>
+        <groupId>commons-collections</groupId>
+        <artifactId>commons-collections</artifactId>
+        <version>3.2.2</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
